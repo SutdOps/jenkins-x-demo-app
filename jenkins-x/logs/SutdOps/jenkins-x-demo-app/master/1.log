@@ -1,0 +1,108 @@
+Step: build-step-credential-initializer:
+
+{"level":"warn","ts":1549288609.504625,"logger":"fallback-logger","caller":"logging/config.go:65","msg":"Fetch GitHub commit ID from kodata failed: \"ref: refs/heads/test\" is not a valid GitHub commit ID"}
+{"level":"info","ts":1549288609.5052342,"logger":"fallback-logger","caller":"creds-init/main.go:40","msg":"Credentials initialized."}
+Step: build-step-git-source-0:
+
+{"level":"warn","ts":1549288612.9260056,"logger":"fallback-logger","caller":"logging/config.go:65","msg":"Fetch GitHub commit ID from kodata failed: \"ref: refs/heads/test\" is not a valid GitHub commit ID"}
+{"level":"info","ts":1549288614.07129,"logger":"fallback-logger","caller":"git-init/main.go:92","msg":"Successfully cloned \"https://github.com/SutdOps/jenkins-x-demo-app.git\" @ \"master\" in path \"/workspace\""}
+Step: build-step-jenkins:
+
+Picked up _JAVA_OPTIONS: -Xmx400m
+Started
+Running in Durability level: PERFORMANCE_OPTIMIZED
+  16.617 [id=25]	WARNING	i.f.k.c.i.VersionUsageUtils#alert: The client is using resource type 'customresourcedefinitions' with unstable version 'v1beta1'
+[Pipeline] node
+Running on Jenkins in /tmp/jenkinsTests.tmp/jenkins7200202834372427768test/workspace/job
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Checkout SCM)
+[Pipeline] checkout
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withCredentials
+[Pipeline] {
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (CI Build and push snapshot)
+Stage "CI Build and push snapshot" skipped due to when conditional
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Build Release)
+[Pipeline] dir
+Running in /home/jenkins/go/src/github.com/sutdops/jenkins-x-demo-app
+[Pipeline] {
+[Pipeline] git
+Cloning the remote Git repository
+Cloning repository https://github.com/sutdops/jenkins-x-demo-app.git
+ > git init /home/jenkins/go/src/github.com/sutdops/jenkins-x-demo-app # timeout=10
+Fetching upstream changes from https://github.com/sutdops/jenkins-x-demo-app.git
+ > git --version # timeout=10
+ > git fetch --tags --progress https://github.com/sutdops/jenkins-x-demo-app.git +refs/heads/*:refs/remotes/origin/*
+ > git config remote.origin.url https://github.com/sutdops/jenkins-x-demo-app.git # timeout=10
+ > git config --add remote.origin.fetch +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git config remote.origin.url https://github.com/sutdops/jenkins-x-demo-app.git # timeout=10
+Fetching upstream changes from https://github.com/sutdops/jenkins-x-demo-app.git
+ > git fetch --tags --progress https://github.com/sutdops/jenkins-x-demo-app.git +refs/heads/*:refs/remotes/origin/*
+ > git rev-parse refs/remotes/origin/master^{commit} # timeout=10
+ > git rev-parse refs/remotes/origin/origin/master^{commit} # timeout=10
+Checking out Revision eefa002f8112d7e26af1f2e9bce62ed74dd0f267 (refs/remotes/origin/master)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f eefa002f8112d7e26af1f2e9bce62ed74dd0f267
+ > git branch -a -v --no-abbrev # timeout=10
+ > git checkout -b master eefa002f8112d7e26af1f2e9bce62ed74dd0f267
+Commit message: "Draft create"
+First time build. Skipping changelog.
+[Pipeline] sh
++ jx-release-version
++ echo 0.0.1
+[Pipeline] sh
++ cat VERSION
++ jx step tag --version 0.0.1
+Tag v0.0.1 created and pushed to remote origin
+[Pipeline] sh
++ make build
+CGO_ENABLED=0 GO15VENDOREXPERIMENT=1 go build -ldflags '' -o bin/jenkins-x-demo-app main.go
+[Pipeline] sh
++ cat VERSION
++ export VERSION=0.0.1
++ skaffold build -f skaffold.yaml
+time="2019-02-04T13:59:17Z" level=warning msg="config version (skaffold/v1beta2) out of date: upgrading to latest (skaffold/v1beta3)"
+Starting build...
+Building [changeme]...
+Sending build context to Docker daemon  525.8kBSending build context to Docker daemon  6.502MB
+Step 1/4 : FROM scratch
+ ---> 
+Step 2/4 : EXPOSE 8080
+ ---> Running in 49fa908c88e7
+ ---> daf4dd077488
+Step 3/4 : ENTRYPOINT /jenkins-x-demo-app
+ ---> Running in d5cc9ffc7d14
+ ---> 9c343886f5bf
+Step 4/4 : COPY ./bin/ /
+ ---> a48b8cc74d58
+Successfully built a48b8cc74d58
+Successfully tagged 81ece5377ba7250dd2da8a39f5d54760:latest
+The push refers to a repository [745727057444.dkr.ecr.eu-west-1.amazonaws.com/sutdops/jenkins-x-demo-app]
+4e4ce40ac227: Preparing
+time="2019-02-04T13:59:19Z" level=fatal msg="build failed: building [changeme]: tagging: pushing: denied: User: arn:aws:sts::745727057444:assumed-role/mendeley-staging-sutd-cluster.eks-worker-node-role/i-0ebe91d61dcb10046 is not authorized to perform: ecr:InitiateLayerUpload on resource: arn:aws:ecr:eu-west-1:745727057444:repository/sutdops/jenkins-x-demo-app"
+[Pipeline] }
+[Pipeline] // dir
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Promote to Environments)
+Stage "Promote to Environments" skipped due to earlier failure(s)
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // withCredentials
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+ERROR: script returned exit code 1
+Finished: FAILURE
